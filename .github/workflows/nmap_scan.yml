@@ -1,0 +1,27 @@
+name: Manual Nmap Scan on IP:Port List
+
+on:
+  workflow_dispatch:
+   
+
+jobs:
+  nmap_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Install Nmap
+      run: sudo apt-get update && sudo apt-get install -y nmap
+
+    - name: Run Nmap scan script on input file
+      run: |
+        chmod +x scan_ips_ports.sh
+        ./scan_ips_ports.sh ${{ github.event.inputs.input_file }}
+
+    - name: Upload Nmap scan results
+      uses: actions/upload-artifact@v4
+      with:
+        name: nmap_scan_results
+        path: nmap_scan_*.txt
