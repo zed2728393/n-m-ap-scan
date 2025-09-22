@@ -15,11 +15,40 @@ jobs:
     - name: Install Nmap
       run: sudo apt-get update && sudo apt-get install -y nmap
 
-    - name: Run Nmap scan script on input file
+    - name: Split Live Hosts
+      run: |
+        awk '{ print > sprintf("hosts_part_%02d.txt", ((NR-1) % 6) + 1) }' live_hosts.txt
+        rm -f nmap_scan.txt
+        
+    - name: Run Nmap scan script on file-1
       run: |
         chmod +x scan_ips_ports.sh
-        ./scan_ips_ports.sh ${{ github.event.inputs.input_file }}
+        ./scan_ips_ports.sh hosts_part_01.txt
 
+    
+    - name: Run Nmap scan script on input file-2
+      run: |
+        ./scan_ips_ports.sh hosts_part_02.txt    
+
+    - name: Run Nmap scan script on input file-3
+      run: |
+       ./scan_ips_ports.sh hosts_part_03.txt
+
+    
+    - name: Run Nmap scan script on input file-4
+      run: |
+        ./scan_ips_ports.sh hosts_part_04.txt
+
+    
+    - name: Run Nmap scan script on input file-5
+      run: |
+        ./scan_ips_ports.sh hosts_part_05.txt
+
+    
+    - name: Run Nmap scan script on input file-6
+      run: |
+        ./scan_ips_ports.sh hosts_part_06.txt
+        
     - name: Upload Nmap scan results
       uses: actions/upload-artifact@v4
       with:
