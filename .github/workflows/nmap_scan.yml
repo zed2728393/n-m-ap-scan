@@ -18,7 +18,7 @@ jobs:
     - name: Split Live Hosts
       run: |
         awk '{ print > sprintf("hosts_part_%02d.txt", ((NR-1) % 6) + 1) }' live_hosts.txt
-        rm -f nmap_scan.txt
+        rm -f nmap_scan_*.txt
         
     - name: Run Nmap scan script on file-1
       run: |
