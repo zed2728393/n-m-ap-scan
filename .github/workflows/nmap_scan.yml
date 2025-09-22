@@ -53,7 +53,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: nmap_scan_results
-        path: nmap_scan.txt
+        path: nmap_scan_*.txt
 
 
 
