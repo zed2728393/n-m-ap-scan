@@ -3,7 +3,6 @@
 rm -f live_hosts_final.txt
 
 input_file="$1"
-file_number="$2"
 
 sed -E 's~https?://~~' "$input_file" > live_hosts_final.txt
 
