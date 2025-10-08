@@ -14,10 +14,11 @@ jobs:
     - name: Install Nmap
       run: sudo apt-get update && sudo apt-get install -y nmap
 
-    - name: Run Nmap scan script on file-1
+    - name: Run Nmap scan script on file
       run: |
-        chmod +x scan_ips_ports.sh
-        ./scan_ips_ports.sh live_hosts.txt
+        nmap --script http-apache-server-status porsche-kempten.de
+      #chmod +x scan_ips_ports.sh
+      #./scan_ips_ports.sh live_hosts.txt
 
             
 
