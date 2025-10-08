@@ -16,7 +16,7 @@ jobs:
 
     - name: Run Nmap scan script on file
       run: |
-        nmap --script http-apache-server-status porsche-kempten.de
+        nmap -sV --script= vulners,firewall-bypass porsche-kempten.de
       #chmod +x scan_ips_ports.sh
       #./scan_ips_ports.sh live_hosts.txt
 
