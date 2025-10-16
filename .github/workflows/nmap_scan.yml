@@ -2,6 +2,15 @@ name: Manual Nmap Scan on IP:Port List
 
 on:
   workflow_dispatch:
+    inputs:
+      scan_option:
+        description: "Single URL or File? (u/f)"
+        required: true
+        default: 'u'
+      target_url:
+        description: "Enter Single URL here"
+        required: false
+
    
 jobs:
   nmap_scan:
@@ -16,9 +25,17 @@ jobs:
 
     - name: Run Nmap scan script on file
       run: |
-          nmap -sV -O jobs.porsche.com
-      #chmod +x scan_ips_ports.sh
-      #./scan_ips_ports.sh live_hosts.txt
+          option="${{ inputs.scan_option }}"
+          if [[ "$option" == 'u' ]]; then
+            url="${{ inputs.target_url }}"
+            echo "Scanning URL"
+            clean_url=$(sed -E 's~https?://~~' <<< "$url")
+            nmap -sV -O "$clean_url"
+          elif [[ "$option" == 'f' ]]; then
+            echo "Scanning file"
+            chmod +x scan_ips_ports.sh
+            ./scan_ips_ports.sh live_hosts.txt
+          fi  
 
             
 
