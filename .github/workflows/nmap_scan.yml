@@ -34,9 +34,9 @@ jobs:
             echo "Scanning URL"
             clean_url=$(sed -E 's~https?://~~' <<< "$url")
             if [[ -n "$flags" ]]; then
-              nmap -sV -O  "$flags" "$clean_url"
+              sudo nmap -sV -O  "$flags" "$clean_url"
             else
-              nmap -sV -O "$clean_url"
+              sudo nmap -sV -O "$clean_url"
             fi  
           elif [[ "$option" == 'f' ]]; then
             echo "Scanning file"
