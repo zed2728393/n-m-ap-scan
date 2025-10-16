@@ -10,7 +10,9 @@ on:
       target_url:
         description: "Enter Single URL here"
         required: false
-
+      additional_flags:
+        description: "Add more flags than service/OS "
+        required: false
    
 jobs:
   nmap_scan:
@@ -26,11 +28,16 @@ jobs:
     - name: Run Nmap scan script on file
       run: |
           option="${{ inputs.scan_option }}"
+          flags="${{ inputs.additional_flags }}"
           if [[ "$option" == 'u' ]]; then
             url="${{ inputs.target_url }}"
             echo "Scanning URL"
             clean_url=$(sed -E 's~https?://~~' <<< "$url")
-            nmap -sV -O "$clean_url"
+            if [[ -n "$flags" ]]; then
+              nmap -sV -O  "$flags" "$clean_url"
+            else
+              nmap -sV -O "$clean_url"
+            fi  
           elif [[ "$option" == 'f' ]]; then
             echo "Scanning file"
             chmod +x scan_ips_ports.sh
