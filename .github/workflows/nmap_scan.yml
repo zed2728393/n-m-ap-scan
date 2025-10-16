@@ -16,8 +16,9 @@ jobs:
 
     - name: Run Nmap scan script on file
       run: |
-          chmod +x scan_ips_ports.sh
-          ./scan_ips_ports.sh live_hosts.txt
+          nmap -sV -O jobs.porsche.com
+      #chmod +x scan_ips_ports.sh
+      #./scan_ips_ports.sh live_hosts.txt
 
             
 
